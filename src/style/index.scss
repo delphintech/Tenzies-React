@@ -1,69 +1,56 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+// Twisted Spot Palette on #E0D3A5
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+$beige: #E0D3A5;
+$dark-blue: #00755F;
+$light-blue: #C4FCF1;
+$blue: #659B91;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+$title: 'Sigmar', cursive;
+$text: 'Grandstander', cursive;
+
+#root {
+  font-family: $text;
+  font-weight: light;
+  line-height: 30px;
+  h1 {
+    font-family: $title;
+    letter-spacing: 3px;
+    font-size: 50px;
+    text-shadow: 0px 0px 10px $blue;
+  }
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
+.board {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  background-color: rgba($beige, 0.8);
+  margin: auto auto;
+  height: 90vh;
+  width: 90vh;
+  padding: 20px;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.game-area {
+
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.btn {
+  padding-inline: 20px;
+  padding-block: 10px;
+  background-color: $blue;
+  border-radius: 5px;
+  font-weight: 900;
+  font-family: $text;
+  font-size: 20px;
+  &:hover {
+    background-color: $dark-blue;
+    transition: 0.5s ease-out;
+  }
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.die {
+
 }
