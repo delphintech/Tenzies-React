@@ -31,10 +31,15 @@ $text: 'Grandstander', cursive;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  justify-content: center;
 }
 
 .game-area {
-
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 1fr 1fr;
+  gap: 30px;
+  padding-block: 40px;
 }
 
 .btn {
@@ -45,6 +50,7 @@ $text: 'Grandstander', cursive;
   font-weight: 900;
   font-family: $text;
   font-size: 20px;
+  margin-top: 35px;
   &:hover {
     background-color: $dark-blue;
     transition: 0.5s ease-out;
@@ -52,5 +58,34 @@ $text: 'Grandstander', cursive;
 }
 
 .die {
+  height: 50px;
+  width: 50px;
+  border: solid 2px black;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.one {
+
+}
+
+.two {
+
+}
+
+.three {
+
+}
+
+.four {
+
+}
+
+.five {
+
+}
+
+.six {
 
 }
