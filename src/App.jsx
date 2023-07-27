@@ -1,12 +1,14 @@
 import './style/index.scss'
 import Die from "./die"
 import React from "react"
+import Confetti from 'react-confetti'
 
 
 export default function App() {
   const [values, setValues] = React.useState({})
   const [disabled, setDisabled] = React.useState([])
-  
+  const [congrats, setCongrats] = React.useState(false)
+
   React.useEffect(() => {
     let test = 0
     for (let i=1; i<=9; i++) {
@@ -14,7 +16,11 @@ export default function App() {
         test = test + 1
       }
     }
-    test === 0 && Object.keys(values).length !== 0 && console.log("Win")
+    if (test === 0 && Object.keys(values).length !== 0)
+    { setCongrats(true) }
+    else {
+      setCongrats(false)
+    }
   }, [values])
 
   const toggleDisabled = (id) => {
@@ -72,6 +78,11 @@ export default function App() {
 
   return (
     <div className="board" >
+      <Confetti
+        className={!congrats && "hide"}
+        width={window.innerWidth}
+        height={window.innerHeight}
+      />
       <h1>Tenzy</h1>
       <h4>Roll until all dice are the same.<br />Click each die to freeze it at its current value between rolls.</h4>
       <div className="game-area">

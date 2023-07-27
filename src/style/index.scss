@@ -57,35 +57,6 @@ $text: 'Grandstander', cursive;
   }
 }
 
-.die {
-  height: 50px;
-  width: 50px;
-  border: solid 2px black;
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr;
-}
-
-.one {
-
-}
-
-.two {
-
-}
-
-.three {
-
-}
-
-.four {
-
-}
-
-.five {
-
-}
-
-.six {
-
+.hide {
+  display: none;
 }
