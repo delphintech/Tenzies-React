@@ -23,6 +23,14 @@ export default function App() {
     }
   }, [values])
 
+  const reset = () => {
+    let paused = true
+    setDisabled([])
+    setValues({})
+    paused = false
+    !paused && roll()
+  }
+
   const toggleDisabled = (id) => {
     if (disabled.find(el => el === id)) {
       setDisabled(oldDisabled => oldDisabled.filter(item => item !== id)) }
@@ -71,7 +79,7 @@ export default function App() {
       results={results}
       id={i}
       toggleDisabled={toggleDisabled}
-      color = {disabled.find(el => el === i) ? "#659B91" : "white"}
+      disabled = {disabled.find(el => el === i) ? true : false}
     />)
   }
 
@@ -79,16 +87,20 @@ export default function App() {
   return (
     <div className="board" >
       <Confetti
-        className={!congrats && "hide"}
+        className={congrats ? "" : "hide"}
         width={window.innerWidth}
         height={window.innerHeight}
       />
       <h1>Tenzy</h1>
-      <h4>Roll until all dice are the same.<br />Click each die to freeze it at its current value between rolls.</h4>
+      <h4>Roll until all dice are the same.<br />
+      Click each die to freeze it at its current value between rolls.</h4>
       <div className="game-area">
         {dice}
       </div>
-      <button className="btn" onClick={roll} >Roll</button>
+      {congrats ?
+        <button className="btn" onClick={reset} >Reset</button>
+        : <button className="btn" onClick={roll} >Roll</button>
+      }
     </div>
   )
 }
