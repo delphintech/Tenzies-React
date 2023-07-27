@@ -10,22 +10,30 @@ export default function App() {
 
   const CreateRef = (id) => {
     const ref = React.createRef()
-    // references.push(ref);
     references[id] = ref
     return ref
   }
 
   const roll = () => {
+    setValues([])
     const refs = Object.values(references)
-
     refs.forEach((ref => { ref.current.rollDice() }))
+  }
+
+  const results = (value) => {
+    setValues(oldValues => {
+      const newValues = [...oldValues]
+      newValues.push(value)
+      return newValues
+    })
   }
 
   const dice = []
 
   for (let i = 0; i < 10; i++ ) {
-    dice.push(<Die key={i} ref={CreateRef(i)} />)
+    dice.push(<Die key={i} ref={CreateRef(i)} results={results} />)
   }
+
 
   return (
     <div className="board" >

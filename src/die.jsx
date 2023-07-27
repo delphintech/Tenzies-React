@@ -3,7 +3,7 @@ import React from "react"
 
 const Die = React.forwardRef((props, ref) => (
     <Dice
-      onRoll={(value) => value}
+      onRoll={(value) => props.results(value)}
       size={50}
       defaultValue={Math.floor(Math.random() * 6) + 1}
       triggers={[]}
