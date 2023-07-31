@@ -32,6 +32,7 @@ const Die = React.forwardRef((props, ref) => {
           ref={ref}
           faceBg={ props.disabled ? facesD : "#E0D3A5" }
           faces={props.disabled ? facesD : faces}
+          rollingTime={500}
         />
       </div>
     )

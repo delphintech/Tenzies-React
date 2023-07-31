@@ -5,44 +5,44 @@ import Confetti from 'react-confetti'
 
 
 export default function App() {
-  const [values, setValues] = React.useState({})
-  const [disabled, setDisabled] = React.useState([])
+  const [dices, setDices] = React.useState(() => {
+    const list = []
+    for (let i = 1; i <= 10; i++ ) {
+        const newDice = {id: i, value: 0, disabled: false}
+        list.push(newDice)
+    }
+    return list
+  })
+
   const [congrats, setCongrats] = React.useState(false)
 
   const reset = () => {
     location.reload()
   }
 
-  const relaunch = (paused) => {
-    paused && roll()
-  }
-
-  React.useEffect(() => {roll()},[])
+  React.useEffect(() => { roll() } ,[])
 
   React.useEffect(() => {
     let test = 0
-    for (let i=1; i<=9; i++) {
+    const values = []
+    dices.forEach((dice) => { values.push(dice.value)})
+    for (let i=0; i<9; i++) {
       if (values[i] !== values[i+1]) {
         test = test + 1
       }
     }
-    if (test === 0 && Object.keys(values).length !== 0)
-    { setCongrats(true) }
+    if (test === 0 && !values.find(el => el === 0)) {
+      setCongrats(true) }
     else {
-      setCongrats(false)
-    }
-  }, [values])
+      setCongrats(false) }
+  }, [dices])
 
   const toggleDisabled = (id) => {
-    if (disabled.find(el => el === id)) {
-      setDisabled(oldDisabled => oldDisabled.filter(item => item !== id)) }
-    else {
-      setDisabled(oldDisabled => {
-        const newDisabled = [...oldDisabled]
-        newDisabled.push(id)
-        return newDisabled
+    setDices(prevDices => {
+      return prevDices.map((dice) => {
+        return dice.id === id ? {...dice, disabled: !dice.disabled} : dice
       })
-    }
+    })
   }
 
   const references = {};
@@ -54,36 +54,31 @@ export default function App() {
   }
 
   const roll = () => {
-    const keys = Object.keys(references)
-    keys.forEach((key => {
-      (disabled && !disabled.find(el => el === parseInt(key)) && references[key].current.rollDice())
-    }))
-    console.log(values)
-  }
-
-  const results = (value, id) => {
-    setValues(oldValues => {
-      const newValue = {...oldValues}
-      const ref = id.toString()
-      if (disabled && !disabled.find(el => el === id )) {
-        newValue[ref] = value
-      }
-      return newValue
+    dices.forEach((dice) => {
+      !dice.disabled && references[dice.id].current.rollDice()
     })
   }
 
-  const dice = []
-
-  for (let i = 1; i <= 10; i++ ) {
-    dice.push(<Die
-      key={i}
-      ref={CreateRef(i)}
-      results={results}
-      id={i}
-      toggleDisabled={toggleDisabled}
-      disabled = {disabled.find(el => el === i) ? true : false}
-    />)
+  const results = (value, id) => {
+    setDices(prevDices => {
+      return prevDices.map((dice) => {
+        return (dice.id === id && !dice.disable) ? {...dice, value: value} : dice
+      })
+    })
   }
+
+  const diceList = []
+
+  dices.forEach((dice) => {
+    diceList.push(<Die
+      key={dice.id}
+      ref={CreateRef(dice.id)}
+      results={results}
+      id={dice.id}
+      toggleDisabled={toggleDisabled}
+      disabled = { dice.disabled }
+    />)
+  })
 
 
   return (
@@ -97,11 +92,11 @@ export default function App() {
       <h4>Roll until all dice are the same.<br />
       Click each die to freeze it at its current value between rolls.</h4>
       <div className="game-area">
-        {dice}
+        {diceList}
       </div>
       {congrats ?
         <button className="btn" onClick={reset} >Reset</button>
-        : <button className="btn" onClick={roll} >Roll</button>
+        : <button className="btn" onClick={!congrats && roll} >Roll</button>
       }
     </div>
   )
