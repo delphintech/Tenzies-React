@@ -9,6 +9,16 @@ export default function App() {
   const [disabled, setDisabled] = React.useState([])
   const [congrats, setCongrats] = React.useState(false)
 
+  const reset = () => {
+    location.reload()
+  }
+
+  const relaunch = (paused) => {
+    paused && roll()
+  }
+
+  React.useEffect(() => {roll()},[])
+
   React.useEffect(() => {
     let test = 0
     for (let i=1; i<=9; i++) {
@@ -22,14 +32,6 @@ export default function App() {
       setCongrats(false)
     }
   }, [values])
-
-  const reset = () => {
-    let paused = true
-    setDisabled([])
-    setValues({})
-    paused = false
-    !paused && roll()
-  }
 
   const toggleDisabled = (id) => {
     if (disabled.find(el => el === id)) {
@@ -54,7 +56,7 @@ export default function App() {
   const roll = () => {
     const keys = Object.keys(references)
     keys.forEach((key => {
-      (!disabled.find(el => el === parseInt(key)) && references[key].current.rollDice())
+      (disabled && !disabled.find(el => el === parseInt(key)) && references[key].current.rollDice())
     }))
     console.log(values)
   }
@@ -63,7 +65,7 @@ export default function App() {
     setValues(oldValues => {
       const newValue = {...oldValues}
       const ref = id.toString()
-      if (!disabled.find(el => el === id )) {
+      if (disabled && !disabled.find(el => el === id )) {
         newValue[ref] = value
       }
       return newValue
