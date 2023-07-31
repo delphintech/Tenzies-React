@@ -5,11 +5,11 @@ import Confetti from 'react-confetti'
 
 
 export default function App() {
-  const [dices, setDices] = React.useState(() => {
+  const [dice, setDice] = React.useState(() => {
     const list = []
     for (let i = 1; i <= 10; i++ ) {
-        const newDice = {id: i, value: 0, disabled: false}
-        list.push(newDice)
+        const newDie = {id: i, value: 0, disabled: false}
+        list.push(newDie)
     }
     return list
   })
@@ -21,7 +21,7 @@ export default function App() {
   React.useEffect(() => {
     let test = 0
     const values = []
-    dices.forEach((dice) => { values.push(dice.value)})
+    dice.forEach((die) => { values.push(die.value)})
     for (let i=0; i<9; i++) {
       if (values[i] !== values[i+1]) {
         test = test + 1
@@ -31,12 +31,12 @@ export default function App() {
       setCongrats(true) }
     else {
       setCongrats(false) }
-  }, [dices])
+  }, [dice])
 
   const toggleDisabled = (id) => {
-    setDices(prevDices => {
-      return prevDices.map((dice) => {
-        return dice.id === id ? {...dice, disabled: !dice.disabled} : dice
+    setDice(prevDice => {
+      return prevDice.map((die) => {
+        return die.id === id ? {...die, disabled: !die.disabled} : die
       })
     })
   }
@@ -51,39 +51,39 @@ export default function App() {
 
   const roll = () => {
     if (congrats) {
-      setDices(prevDice => {
+      setDice(prevDice => {
         return prevDice.map((die) => {
           return {...die, disabled: false}
         })
       })
-      dices.forEach((die) => {
+      dice.forEach((die) => {
         references[die.id].current.rollDice()
       })
     } else {
-      dices.forEach((dice) => {
-        !dice.disabled && references[dice.id].current.rollDice()
+      dice.forEach((die) => {
+        !die.disabled && references[die.id].current.rollDice()
       })
     }
   }
 
   const results = (value, id) => {
-    setDices(prevDices => {
-      return prevDices.map((dice) => {
-        return (dice.id === id && !dice.disable) ? {...dice, value: value} : dice
+    setDice(prevDice => {
+      return prevDice.map((die) => {
+        return (die.id === id && !die.disable) ? {...die, value: value} : die
       })
     })
   }
 
   const diceList = []
 
-  dices.forEach((dice) => {
+  dice.forEach((die) => {
     diceList.push(<Die
-      key={dice.id}
-      ref={CreateRef(dice.id)}
+      key={die.id}
+      ref={CreateRef(die.id)}
       results={results}
-      id={dice.id}
+      id={die.id}
       toggleDisabled={toggleDisabled}
-      disabled = { dice.disabled }
+      disabled = { die.disabled }
     />)
   })
 
