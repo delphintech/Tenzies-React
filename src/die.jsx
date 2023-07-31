@@ -23,14 +23,14 @@ const Die = React.forwardRef((props, ref) => {
     ]
 
     return (
-      <div onClick={() => props.toggleDisabled(props.id)}>
+      <div onClick={() => props.toggleDisabled(props.id) } className="die">
         <Dice
           onRoll={(value) => props.results(value, props.id)}
           size={50}
           defaultValue={Math.floor(Math.random() * 6) + 1}
           triggers={[]}
           ref={ref}
-          faceBg={ props.disabled ? facesD : "#E0D3A5" }
+          faceBg={props.disabled ? facesD : "none"}
           faces={props.disabled ? facesD : faces}
           rollingTime={500}
         />
@@ -38,6 +38,9 @@ const Die = React.forwardRef((props, ref) => {
     )
   }
 )
+
+// props.disabled ? facesD : faces
+
 
 Die.displayName="Die"
 
