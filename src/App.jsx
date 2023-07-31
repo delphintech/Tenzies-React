@@ -16,10 +16,6 @@ export default function App() {
 
   const [congrats, setCongrats] = React.useState(false)
 
-  const reset = () => {
-    location.reload()
-  }
-
   React.useEffect(() => { roll() } ,[])
 
   React.useEffect(() => {
@@ -54,9 +50,20 @@ export default function App() {
   }
 
   const roll = () => {
-    dices.forEach((dice) => {
-      !dice.disabled && references[dice.id].current.rollDice()
-    })
+    if (congrats) {
+      setDices(prevDice => {
+        return prevDice.map((die) => {
+          return {...die, disabled: false}
+        })
+      })
+      dices.forEach((die) => {
+        references[die.id].current.rollDice()
+      })
+    } else {
+      dices.forEach((dice) => {
+        !dice.disabled && references[dice.id].current.rollDice()
+      })
+    }
   }
 
   const results = (value, id) => {
@@ -83,11 +90,10 @@ export default function App() {
 
   return (
     <div className="board" >
-      <Confetti
-        className={congrats ? "" : "hide"}
+      {congrats && <Confetti
         width={window.innerWidth}
         height={window.innerHeight}
-      />
+      />}
       <h1>Tenzy</h1>
       <h4>Roll until all dice are the same.<br />
       Click each die to freeze it at its current value between rolls.</h4>
@@ -95,8 +101,8 @@ export default function App() {
         {diceList}
       </div>
       {congrats ?
-        <button className="btn" onClick={reset} >Reset</button>
-        : <button className="btn" onClick={!congrats && roll} >Roll</button>
+        <button className="btn" onClick={roll} >Reset</button>
+        : <button className="btn" onClick={roll} >Roll</button>
       }
     </div>
   )
