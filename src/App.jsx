@@ -2,7 +2,7 @@ import './style/index.scss'
 import Die from "./die"
 import React from "react"
 import Confetti from 'react-confetti'
-
+import Pop from './popup';
 
 export default function App() {
   const [dice, setDice] = React.useState(() => {
@@ -15,6 +15,8 @@ export default function App() {
   })
 
   const [congrats, setCongrats] = React.useState(false)
+
+  const [timer, setTimer] = React.useState(0)
 
   React.useEffect(() => { roll() } ,[])
 
@@ -90,10 +92,15 @@ export default function App() {
 
   return (
     <div className="board" >
-      {congrats && <Confetti
-        width={window.innerWidth}
-        height={window.innerHeight}
-      />}
+      {congrats &&
+      <>
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+        />
+        <Pop />
+      </>
+      }
       <h1>Tenzy</h1>
       <h4>Roll until all dice are the same.<br />
       Click each die to freeze it at its current value between rolls.</h4>
