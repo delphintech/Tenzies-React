@@ -7,7 +7,7 @@ import Pop from './popup';
 export default function App() {
   const [dice, setDice] = React.useState(() => {
     const list = []
-    for (let i = 1; i <= 10; i++ ) {
+    for (let i = 1; i <=4; i++ ) {
         const newDie = {id: i, value: 0, disabled: false}
         list.push(newDie)
     }
@@ -17,17 +17,17 @@ export default function App() {
 
   const [congrats, setCongrats] = React.useState(false)
 
-  const [timer, setTimer] = React.useState(Date.now())
+  const [timer, setTimer] = React.useState(() => Date.now())
 
-  React.useEffect(() => {
-    roll();
-  } ,[])
+  React.useEffect(() => { roll() } ,[])
+
+  React.useEffect(() => { !congrats && setTimer(Date.now())}, [congrats])
 
   React.useEffect(() => {
     let test = 0
     const values = []
     dice.forEach((die) => { values.push(die.value)})
-    for (let i=0; i<9; i++) {
+    for (let i=0; i<3; i++) {
       if (values[i] !== values[i+1]) {
         test = test + 1
       }
@@ -35,8 +35,6 @@ export default function App() {
     if (test === 0 && !values.find(el => el === 0)) {
       setCongrats(true)
       setTimer(oldTimer => Date.now() - oldTimer)
-      console.log(timer)
-      console.log(typeof timer)
     }
     else {
       setCongrats(false) }
@@ -62,13 +60,12 @@ export default function App() {
     if (congrats) {
       setDice(prevDice => {
         return prevDice.map((die) => {
-          return {...die, disabled: false}
+          return {...die, value: 0, disabled: false}
         })
       })
       dice.forEach((die) => {
         references[die.id].current.rollDice()
       })
-      setTimer(Date.now())
     } else {
       dice.forEach((die) => {
         !die.disabled && references[die.id].current.rollDice()
