@@ -14,6 +14,7 @@ export default function App() {
     return list
   })
 
+  const [bestScore, setBestScore] = React.useState(() => JSON.parse(localStorage.getItem("tenzi")))
 
   const [congrats, setCongrats] = React.useState(false)
 
@@ -34,7 +35,7 @@ export default function App() {
     }
     if (test === 0 && !values.find(el => el === 0)) {
       setCongrats(true)
-      setTimer(oldTimer => Date.now() - oldTimer)
+      setTimer(oldTimer => ((Date.now() - oldTimer)/1000.0).toFixed(1))
     }
     else {
       setCongrats(false) }
@@ -96,16 +97,21 @@ export default function App() {
 
 
   return (
+    <>
+    {congrats &&
+    <>
+      <Confetti
+        width={window.innerWidth}
+        height={window.innerHeight}
+      />
+      <Pop
+        seconds={timer}
+        bestScore={bestScore}
+        setBestScore={setBestScore}
+      />
+    </>
+    }
     <div className="board" >
-      {congrats &&
-      <>
-        <Confetti
-          width={window.innerWidth}
-          height={window.innerHeight}
-        />
-        <Pop seconds={(timer/1000.0).toFixed(1)}/>
-      </>
-      }
       <h1>Tenzy</h1>
       <h4>Roll until all dice are the same.<br />
       Click each die to freeze it at its current value between rolls.</h4>
@@ -117,5 +123,6 @@ export default function App() {
         : <button className="btn" onClick={roll} >Roll</button>
       }
     </div>
+    </>
   )
 }
