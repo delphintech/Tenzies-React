@@ -14,11 +14,14 @@ export default function App() {
     return list
   })
 
+
   const [congrats, setCongrats] = React.useState(false)
 
-  const [timer, setTimer] = React.useState(0)
+  const [timer, setTimer] = React.useState(Date.now())
 
-  React.useEffect(() => { roll() } ,[])
+  React.useEffect(() => {
+    roll();
+  } ,[])
 
   React.useEffect(() => {
     let test = 0
@@ -30,7 +33,11 @@ export default function App() {
       }
     }
     if (test === 0 && !values.find(el => el === 0)) {
-      setCongrats(true) }
+      setCongrats(true)
+      setTimer(oldTimer => Date.now() - oldTimer)
+      console.log(timer)
+      console.log(typeof timer)
+    }
     else {
       setCongrats(false) }
   }, [dice])
@@ -61,6 +68,7 @@ export default function App() {
       dice.forEach((die) => {
         references[die.id].current.rollDice()
       })
+      setTimer(Date.now())
     } else {
       dice.forEach((die) => {
         !die.disabled && references[die.id].current.rollDice()
@@ -98,7 +106,7 @@ export default function App() {
           width={window.innerWidth}
           height={window.innerHeight}
         />
-        <Pop />
+        <Pop seconds={(timer/1000.0).toFixed(1)}/>
       </>
       }
       <h1>Tenzy</h1>
