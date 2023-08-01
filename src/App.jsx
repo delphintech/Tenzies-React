@@ -7,7 +7,7 @@ import Pop from './popup';
 export default function App() {
   const [dice, setDice] = React.useState(() => {
     const list = []
-    for (let i = 1; i <=4; i++ ) {
+    for (let i = 1; i <=10; i++ ) {
         const newDie = {id: i, value: 0, disabled: false}
         list.push(newDie)
     }
@@ -28,7 +28,7 @@ export default function App() {
     let test = 0
     const values = []
     dice.forEach((die) => { values.push(die.value)})
-    for (let i=0; i<3; i++) {
+    for (let i=0; i<9; i++) {
       if (values[i] !== values[i+1]) {
         test = test + 1
       }
