@@ -33,6 +33,7 @@ $text: 'Grandstander', cursive;
   align-items: center;
   text-align: center;
   justify-content: center;
+  border-radius: 10px;
   position: relative;
 }
 
@@ -68,6 +69,7 @@ $text: 'Grandstander', cursive;
   background-color: rgba($light-blue, 0.95);
   box-shadow: 0px 0px 20px #0000006b;
   padding: 25px;
+  border-radius: 10px;
   h1 {
     font-family: $title;
     text-align: center;

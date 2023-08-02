@@ -2,8 +2,10 @@ import Popup from 'reactjs-popup';
 import React from "react"
 
 export default function Pop( { seconds, bestScore, setBestScore } ) {
+  // State if the final score is the new high score
   const [top, setTop] = React.useState(false)
 
+  // Creating the sentences for each score range
   let score = ""
 
   if (seconds < 10) {
@@ -20,12 +22,14 @@ export default function Pop( { seconds, bestScore, setBestScore } ) {
     score = "🐣 Cubie Newbie 🐣"
   }
 
+  // Define the gif to display if it is a new high score or not
   let gif = ""
 
   top ?
   gif = "https://media3.giphy.com/media/o75ajIFH0QnQC3nCeD/200.webp?cid=ecf05e47ldj1wlgdery6q5fqm2e76yxuykwv0jlmn2um7f2w&ep=v1_gifs_search&rid=200.webp&ct=g"
   : gif = "https://media2.giphy.com/media/26tPplGWjN0xLybiU/giphy.gif?cid=ecf05e47cdajmou3231hlpy96yxeey3s6mbj9lov8lyausk8&ep=v1_gifs_search&rid=giphy.gif&ct=g"
 
+  // Check if it is a new high score once, when the popup score is display
   React.useEffect(() => {
     if ( seconds > 1 && (!bestScore || seconds < bestScore) ) {
       setTop(true)
